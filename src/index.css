@@ -1,13 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles */
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @apply bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 font-sans;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1, h2, h3 {
+  @apply font-serif;
+}
+
+a {
+  @apply text-primary underline hover:text-primary-dark;
+  transition: color 0.2s ease;
+}
+
+button {
+  @apply bg-primary text-white font-semibold rounded-md px-4 py-2 shadow-subtle hover:bg-primary-dark transition;
+}
+
+input, select, textarea {
+  @apply border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dark button {
+  @apply bg-primary-light text-gray-900 hover:bg-primary;
 }
