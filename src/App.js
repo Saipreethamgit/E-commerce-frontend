@@ -54,18 +54,18 @@ function App() {
     return;
   }
   try {
-    const existing = cartItems.find(item => item._id === product._id);
+    const existing = cartItems.find(item => item.id === product.id);
     let updatedCart;
     if (existing) {
       updatedCart = cartItems.map(item =>
-        item._id === product._id
+        item.id === product.id
           ? { ...item, quantity: item.quantity + 1 }
           : item
       );
-      await addOrUpdateCartItem({ userId: user.id, productId: product._id, quantity: existing.quantity + 1 });
+      await addOrUpdateCartItem({ userId: user.id, productId: product.id, quantity: existing.quantity + 1 });
     } else {
       updatedCart = [...cartItems, { ...product, quantity: 1 }];
-      await addOrUpdateCartItem({ userId: user.id, productId: product._id, quantity: 1 });
+      await addOrUpdateCartItem({ userId: user.id, productId: product.id, quantity: 1 });
     }
     setCartItems(updatedCart);
     toast.success(`${product.name} added to cart!`);

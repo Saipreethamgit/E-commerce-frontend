@@ -3,14 +3,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ProductCard = ({ product, addToCart, toggleWishlist, wishlist }) => {
-  const isInWishlist = wishlist?.some(item => item._id === product._id);
-  console.log("isInWishlist?", isInWishlist, "product._id:", product._id);
+  const isInWishlist = wishlist?.some(item => item.id === product.id);
+  console.log("isInWishlist?", isInWishlist, "product._id:", product.id);
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden relative">
       
       {/* 🔗 Make image clickable */}
-      <Link to={`/products/${product._id}`}>
+      <Link to={`/products/${product.id}`}>
         <img
           src={product.image}
           alt={product.name}
@@ -20,7 +20,7 @@ const ProductCard = ({ product, addToCart, toggleWishlist, wishlist }) => {
 
       <div className="p-5 flex flex-col justify-between">
         {/* 🔗 Make name clickable */}
-        <Link to={`/products/${product._id}`}>
+        <Link to={`/products/${product.id}`}>
           <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white hover:underline">
             {product.name}
           </h2>

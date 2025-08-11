@@ -11,7 +11,7 @@ const ProductDetail = ({ addToCart, wishlist }) => {
   const [newReview, setNewReview] = useState({ user: "", rating: "", comment: "" });
 
   // Check if already in wishlist
-  const isInWishlist = wishlist?.some(item => item._id === product?._id);
+  const isInWishlist = wishlist?.some(item => item.id === product?.id);
 
   useEffect(() => {
     const fetchProduct = async () => {

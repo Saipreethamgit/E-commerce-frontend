@@ -5,24 +5,24 @@ import { useNavigate } from 'react-router-dom';
 const Cart = ({ cartItems, setCartItems }) => {
   const navigate = useNavigate();
 
-  const increaseQty = (_id) => {
+  const increaseQty = (id) => {
     const updatedCart = cartItems.map((item) =>
-      item._id === _id ? { ...item, quantity: item.quantity + 1 } : item
+      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
     );
     setCartItems(updatedCart);
   };
 
-  const decreaseQty = (_id) => {
+  const decreaseQty = (id) => {
     const updatedCart = cartItems.map((item) =>
-      item._id === _id && item.quantity > 1
+      item.id === id && item.quantity > 1
         ? { ...item, quantity: item.quantity - 1 }
         : item
     );
     setCartItems(updatedCart);
   };
 
-  const removeItem = (_id) => {
-    const updatedCart = cartItems.filter((item) => item._id !== _id);
+  const removeItem = (id) => {
+    const updatedCart = cartItems.filter((item) => item.id !== id);
     setCartItems(updatedCart);
   };
 
@@ -43,7 +43,7 @@ const Cart = ({ cartItems, setCartItems }) => {
         <div className="space-y-6">
           {cartItems.map((item) => (
             <div
-              key={item._id}
+              key={item.id}
               className="flex justify-between items-center border-b border-gray-200 dark:border-gray-600 pb-4"
             >
               <div>
@@ -52,20 +52,20 @@ const Cart = ({ cartItems, setCartItems }) => {
               </div>
               <div className="flex items-center space-x-4">
                 <button
-                  onClick={() => decreaseQty(item._id)}
+                  onClick={() => decreaseQty(item.id)}
                   className="bg-gray-300 dark:bg-gray-600 text-black dark:text-white px-2 py-1 rounded hover:opacity-80"
                 >
                   −
                 </button>
                 <span className="font-semibold">{item.quantity}</span>
                 <button
-                  onClick={() => increaseQty(item._id)}
+                  onClick={() => increaseQty(item.id)}
                   className="bg-gray-300 dark:bg-gray-600 text-black dark:text-white px-2 py-1 rounded hover:opacity-80"
                 >
                   +
                 </button>
                 <button
-                  onClick={() => removeItem(item._id)}
+                  onClick={() => removeItem(item.id)}
                   className="text-red-600 font-medium hover:underline ml-4"
                 >
                   Remove
