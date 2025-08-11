@@ -49,30 +49,31 @@ function App() {
 
 
   const addToCart = async (product) => {
-    if (!user) {
-      toast.error("Please login to add items to cart.");
-      return;
+  if (!user) {
+    toast.error("Please login to add items to cart.");
+    return;
+  }
+  try {
+    const existing = cartItems.find(item => item._id === product._id);
+    let updatedCart;
+    if (existing) {
+      updatedCart = cartItems.map(item =>
+        item._id === product._id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+      await addOrUpdateCartItem({ userId: user.id, productId: product._id, quantity: existing.quantity + 1 });
+    } else {
+      updatedCart = [...cartItems, { ...product, quantity: 1 }];
+      await addOrUpdateCartItem({ userId: user.id, productId: product._id, quantity: 1 });
     }
-    try {
-      const existing = cartItems.find(item => item.id === product.id);
-      let updatedCart;
-      if (existing) {
-        updatedCart = cartItems.map(item =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-        await addOrUpdateCartItem({ userId: user.id, productId: product.id, quantity: existing.quantity + 1 });
-      } else {
-        updatedCart = [...cartItems, { ...product, quantity: 1 }];
-        await addOrUpdateCartItem({ userId: user.id, productId: product.id, quantity: 1 });
-      }
-      setCartItems(updatedCart);
-      toast.success(`${product.name} added to cart!`);
-    } catch (error) {
-      toast.error("Failed to update cart.");
-    }
-  };
+    setCartItems(updatedCart);
+    toast.success(`${product.name} added to cart!`);
+  } catch (error) {
+    toast.error("Failed to update cart.");
+  }
+};
+
 
 
   return (
@@ -92,7 +93,7 @@ function App() {
                 />
               }
             />
-            <Route path="/products/:id" element={<ProductDetail addToCart={addToCart}  />} />
+            <Route path="/products/:id" element={<ProductDetail addToCart />} />
             <Route path="/cart" element={<Cart cartItems={cartItems} setCartItems={setCartItems} />} />
             <Route path="/login" element={<Login setUser={setUser} />} />
             <Route path="*" element={<h2 className="text-center mt-10">404 - Page Not Found</h2>} />

@@ -1,34 +1,39 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
-const ProductDetail = ({ addToCart, wishlist, toggleWishlist }) => {
-  const { id } = useParams();
-  console.log("Product ID from URL:", id);
+const ProductDetail = ({ addToCart, wishlist }) => {
+  const { id } = useParams(); // This comes from URL /products/:id
   const navigate = useNavigate();
+
   const [product, setProduct] = useState(null);
-  const isInWishlist = wishlist?.some(item => item.id === product?.id);
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({ user: "", rating: "", comment: "" });
 
+  // Check if already in wishlist
+  const isInWishlist = wishlist?.some(item => item._id === product?._id);
+
   useEffect(() => {
-    fetch(`http://localhost:8080/api/products/${id}`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Product not found");
-        return res.json();
-      })
-      .then((data) => {
-        setProduct(data);
-        setReviews(data.reviews || []);
-      })
-      .catch((err) => {
-        console.error(err);
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(
+  `https://e-commerce-backend-6jy0.onrender.com/api/products/${id}`
+);
+setProduct(response.data);
+        setReviews(response.data.reviews || []);
+      } catch (error) {
+        console.error('Error fetching product:', error);
         setProduct(null);
-      });
+      }
+    };
+    fetchProduct();
   }, [id]);
 
   const handleAdd = () => {
-    addToCart(product);
-    navigate("/cart");
+    if (product) {
+      addToCart(product);
+      navigate("/cart");
+    }
   };
 
   const handleReviewChange = (e) => {
@@ -42,12 +47,18 @@ const ProductDetail = ({ addToCart, wishlist, toggleWishlist }) => {
     setNewReview({ user: "", rating: "", comment: "" });
   };
 
-  if (!product) return <div className="text-center mt-10 text-red-600 text-lg">Product not found</div>;
+  if (!product) {
+    return <div className="text-center mt-10 text-red-600 text-lg">Product not found</div>;
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-4 mt-8">
       <div className="flex flex-col md:flex-row gap-6">
-        <img src={product.image} alt={product.name} className="w-full md:w-1/2 h-auto rounded-xl shadow" />
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full md:w-1/2 h-auto rounded-xl shadow"
+        />
         <div className="flex-1">
           <h2 className="text-3xl font-bold mb-2">{product.name}</h2>
           <p className="text-lg text-gray-700 mb-2">${product.price}</p>
@@ -61,6 +72,7 @@ const ProductDetail = ({ addToCart, wishlist, toggleWishlist }) => {
         </div>
       </div>
 
+      {/* Reviews */}
       <div className="mt-10">
         <h3 className="text-xl font-semibold mb-4">Customer Reviews</h3>
         {reviews.length === 0 ? (
@@ -75,6 +87,7 @@ const ProductDetail = ({ addToCart, wishlist, toggleWishlist }) => {
           ))
         )}
 
+        {/* Review Form */}
         <form onSubmit={handleReviewSubmit} className="mt-6 space-y-4">
           <input
             type="text"

@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8080/api"; // adjust if your backend URL is different
+const API_BASE = "https://e-commerce-backend-6jy0.onrender.com"; 
 
 // CART API
 export async function fetchCart(userId) {

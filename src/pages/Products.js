@@ -8,7 +8,8 @@ const Products = ({ addToCart, wishlist, toggleWishlist }) => {
   const [category, setCategory] = useState("all");
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/products")
+    fetch("https://e-commerce-backend-6jy0.onrender.com/api/products")
+
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(err => console.error("Error fetching products:", err));
