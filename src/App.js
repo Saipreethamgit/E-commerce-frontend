@@ -48,43 +48,43 @@ function App() {
   }, [user]);
 
 
-  const addToCart = async (product) => {
+ const addToCart = async (product) => {
   if (!user) {
     toast.error("Please login to add items to cart.");
     return;
   }
 
-  // Normalize ID
-  const normalizedProduct = { 
-    ...product, 
-    id: product.id || product._id 
-  };
-
   try {
-    const existing = cartItems.find(item => item.id === normalizedProduct.id);
+    const productId = String(product.id || product._id);
+    const userId = String(user.id || user._id);
+
+    const existing = cartItems.find(item => String(item.productId) === productId);
     let updatedCart;
+
     if (existing) {
       updatedCart = cartItems.map(item =>
-        item.id === normalizedProduct.id
+        String(item.productId) === productId
           ? { ...item, quantity: item.quantity + 1 }
           : item
       );
-      await addOrUpdateCartItem({ 
-        userId: String(user.id), 
-        productId: String(normalizedProduct.id), 
-        quantity: existing.quantity + 1 
+      await addOrUpdateCartItem({
+        userId,
+        productId,
+        quantity: 1 // server will increment
       });
     } else {
-      updatedCart = [...cartItems, { ...normalizedProduct, quantity: 1 }];
-      await addOrUpdateCartItem({ 
-        userId: String(user.id), 
-        productId: String(normalizedProduct.id), 
-        quantity: 1 
+      updatedCart = [...cartItems, { ...product, productId, quantity: 1 }];
+      await addOrUpdateCartItem({
+        userId,
+        productId,
+        quantity: 1
       });
     }
+
     setCartItems(updatedCart);
-    toast.success(`${normalizedProduct.name} added to cart!`);
+    toast.success(`${product.name} added to cart!`);
   } catch (error) {
+    console.error(error);
     toast.error("Failed to update cart.");
   }
 };
