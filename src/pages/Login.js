@@ -2,6 +2,16 @@
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { loginAPI } from '../api';
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  const data = await loginAPI(username, password);
+  localStorage.setItem('token', data.token);
+  localStorage.setItem('user', JSON.stringify({ id: data.userId, username: data.username }));
+  setUser({ id: data.userId, username: data.username });
+  navigate('/products');
+}
 
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState('');

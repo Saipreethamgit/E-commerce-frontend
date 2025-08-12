@@ -12,6 +12,7 @@ import Checkout from './pages/Checkout';
 import Profile from './pages/Profile';
 import OrderHistory from './pages/OrderHistory';
 import axios from 'axios';
+import { addOrUpdateCartItem } from './api';
 
 import { 
   addOrUpdateCartItem, 
@@ -49,13 +50,13 @@ function App() {
 
 
  const addToCart = async (product) => {
-  if (!user) {
+  if (!localStorage.getItem('token')) {
     toast.error("Please login to add items to cart.");
     return;
   }
 
   try {
-    const productId = String(product.id || product._id);
+    await addOrUpdateCartItem({ productId: product.id || product._id, quantity: 1 });
     const userId = String(user.id || user._id);
 
     const existing = cartItems.find(item => String(item.productId) === productId);
