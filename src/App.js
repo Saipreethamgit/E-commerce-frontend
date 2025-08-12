@@ -70,8 +70,8 @@ function App() {
           : item
       );
       await addOrUpdateCartItem({ 
-        userId: user.id, 
-        productId: normalizedProduct.id, 
+        userId: String(user.id), 
+        productId: String(normalizedProduct.id), 
         quantity: existing.quantity + 1 
       });
     } else {
