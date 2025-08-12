@@ -15,7 +15,7 @@ const Header = ({ user, setUser, cartCount }) => {
     <header className="sticky top-0 z-50 backdrop-blur bg-black/70 shadow-lg">
       <nav className="max-w-7xl mx-auto flex justify-between items-center p-4">
         <Link to="/" className="text-2xl font-extrabold tracking-wide text-primary transition hover:text-primary-dark">
-          🛍️ GaMercein
+          🛍️ Gamercein
         </Link>
 
         <ul className="flex flex-wrap justify-end gap-4 items-center">

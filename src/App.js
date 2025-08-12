@@ -93,7 +93,7 @@ function App() {
                 />
               }
             />
-            <Route path="/products/:id" element={<ProductDetail addToCart />} />
+            <Route path="/products/:id" element={<ProductDetail addToCart={addToCart} />} />
             <Route path="/cart" element={<Cart cartItems={cartItems} setCartItems={setCartItems} />} />
             <Route path="/login" element={<Login setUser={setUser} />} />
             <Route path="*" element={<h2 className="text-center mt-10">404 - Page Not Found</h2>} />
