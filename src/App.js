@@ -53,26 +53,42 @@ function App() {
     toast.error("Please login to add items to cart.");
     return;
   }
+
+  // Normalize ID
+  const normalizedProduct = { 
+    ...product, 
+    id: product.id || product._id 
+  };
+
   try {
-    const existing = cartItems.find(item => item.id === product.id);
+    const existing = cartItems.find(item => item.id === normalizedProduct.id);
     let updatedCart;
     if (existing) {
       updatedCart = cartItems.map(item =>
-        item.id === product.id
+        item.id === normalizedProduct.id
           ? { ...item, quantity: item.quantity + 1 }
           : item
       );
-      await addOrUpdateCartItem({ userId: user.id, productId: product.id, quantity: existing.quantity + 1 });
+      await addOrUpdateCartItem({ 
+        userId: user.id, 
+        productId: normalizedProduct.id, 
+        quantity: existing.quantity + 1 
+      });
     } else {
-      updatedCart = [...cartItems, { ...product, quantity: 1 }];
-      await addOrUpdateCartItem({ userId: user.id, productId: product.id, quantity: 1 });
+      updatedCart = [...cartItems, { ...normalizedProduct, quantity: 1 }];
+      await addOrUpdateCartItem({ 
+        userId: user.id, 
+        productId: normalizedProduct.id, 
+        quantity: 1 
+      });
     }
     setCartItems(updatedCart);
-    toast.success(`${product.name} added to cart!`);
+    toast.success(`${normalizedProduct.name} added to cart!`);
   } catch (error) {
     toast.error("Failed to update cart.");
   }
 };
+
 
 
 

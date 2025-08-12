@@ -14,20 +14,28 @@ const ProductDetail = ({ addToCart, wishlist }) => {
   const isInWishlist = wishlist?.some(item => item.id === product?.id);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await axios.get(
-  `https://e-commerce-backend-6jy0.onrender.com/api/products/${id}`
-);
-setProduct(response.data);
-        setReviews(response.data.reviews || []);
-      } catch (error) {
-        console.error('Error fetching product:', error);
-        setProduct(null);
-      }
-    };
-    fetchProduct();
-  }, [id]);
+  const fetchProduct = async () => {
+    try {
+      const response = await axios.get(
+        `https://e-commerce-backend-6jy0.onrender.com/api/products/${id}`
+      );
+
+      // Ensure it has `id` instead of `_id`
+      const productData = {
+        ...response.data,
+        id: response.data.id || response.data._id,
+      };
+
+      setProduct(productData);
+      setReviews(productData.reviews || []);
+    } catch (error) {
+      console.error('Error fetching product:', error);
+      setProduct(null);
+    }
+  };
+  fetchProduct();
+}, [id]);
+
 
   const handleAdd = () => {
     if (product) {
