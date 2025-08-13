@@ -12,7 +12,6 @@ import Checkout from './pages/Checkout';
 import Profile from './pages/Profile';
 import OrderHistory from './pages/OrderHistory';
 import axios from 'axios';
-import { addOrUpdateCartItem } from './api';
 
 import { 
   addOrUpdateCartItem, 
