@@ -50,15 +50,15 @@ function App() {
 
 
  const addToCart = async (product) => {
-  if (!localStorage.getItem('token')) {
+  const token = localStorage.getItem('token');
+  if (!token) {
     toast.error("Please login to add items to cart.");
     return;
   }
 
   try {
-    await addOrUpdateCartItem({ productId: product.id || product._id, quantity: 1 });
+    const productId = String(product.id || product._id);
     const userId = String(user.id || user._id);
-
     const existing = cartItems.find(item => String(item.productId) === productId);
     let updatedCart;
 
@@ -71,15 +71,15 @@ function App() {
       await addOrUpdateCartItem({
         userId,
         productId,
-        quantity: 1 // server will increment
-      });
+        quantity: existing.quantity + 1
+      }, token);
     } else {
       updatedCart = [...cartItems, { ...product, productId, quantity: 1 }];
       await addOrUpdateCartItem({
         userId,
         productId,
         quantity: 1
-      });
+      }, token);
     }
 
     setCartItems(updatedCart);

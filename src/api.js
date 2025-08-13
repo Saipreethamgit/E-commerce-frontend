@@ -1,11 +1,11 @@
-const API_BASE = "https://e-commerce-backend-6jy0.onrender.com/api"; 
+const API_BASE = "https://e-commerce-backend-6jy0.onrender.com"; 
 
 export function getAuthHeaders() {
   const token = localStorage.getItem("token");
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
-// Example: login
+// LOGIN API
 export async function loginAPI(username, password) {
   const res = await fetch(`${API_BASE}/api/auth/login`, {
     method: "POST",
@@ -16,8 +16,8 @@ export async function loginAPI(username, password) {
   return res.json();
 }
 
-// CART API using auth header
-export async function fetchCart(userId) {
+// CART API
+export async function fetchCart() {
   const res = await fetch(`${API_BASE}/api/cart`, {
     headers: { ...getAuthHeaders() }
   });
@@ -35,38 +35,39 @@ export async function addOrUpdateCartItem({ productId, quantity }) {
   return res.json();
 }
 
-export async function removeCartItem(userId, productId) {
-  const res = await fetch(`${API_BASE}/cart/${userId}/${productId}`, {
+export async function removeCartItem(productId) {
+  const res = await fetch(`${API_BASE}/api/cart/${productId}`, {
     method: "DELETE",
+    headers: { ...getAuthHeaders() }
   });
   if (!res.ok) throw new Error("Failed to remove cart item");
-  return await res.json();
+  return res.json();
 }
 
 // WISHLIST API
-export async function fetchWishlist(userId) {
-  const res = await fetch(`${API_BASE}/wishlist/${userId}`);
+export async function fetchWishlist() {
+  const res = await fetch(`${API_BASE}/api/wishlist`, {
+    headers: { ...getAuthHeaders() }
+  });
   if (!res.ok) throw new Error("Failed to fetch wishlist");
-  return await res.json();
+  return res.json();
 }
 
-export async function addWishlistItem({ userId, productId }) {
-  const res = await fetch(`${API_BASE}/wishlist`, {
+export async function addWishlistItem({ productId }) {
+  const res = await fetch(`${API_BASE}/api/wishlist`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      userId: String(userId),
-      productId: String(productId)
-    }),
+    headers: { "Content-Type": "application/json", ...getAuthHeaders() },
+    body: JSON.stringify({ productId }),
   });
   if (!res.ok) throw new Error("Failed to add wishlist item");
-  return await res.json();
+  return res.json();
 }
 
-export async function removeWishlistItem(userId, productId) {
-  const res = await fetch(`${API_BASE}/wishlist/${userId}/${productId}`, {
+export async function removeWishlistItem(productId) {
+  const res = await fetch(`${API_BASE}/api/wishlist/${productId}`, {
     method: "DELETE",
+    headers: { ...getAuthHeaders() }
   });
   if (!res.ok) throw new Error("Failed to remove wishlist item");
-  return await res.json();
+  return res.json();
 }
