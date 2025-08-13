@@ -6,15 +6,16 @@ export function getAuthHeaders() {
 }
 
 // LOGIN API
-export async function loginAPI(username, password) {
+export async function loginAPI(email, password) {
   const res = await fetch(`${API_BASE}/api/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password })
+    body: JSON.stringify({ email, password })
   });
   if (!res.ok) throw new Error("Login failed");
   return res.json();
 }
+
 
 // CART API
 export async function fetchCart() {
