@@ -16,6 +16,12 @@ export async function loginAPI(email, password) {
   return res.json();
 }
 
+// PRODUCTS API
+export async function fetchProducts() {
+  const res = await fetch(`${API_BASE}/api/products`);
+  if (!res.ok) throw new Error("Failed to fetch products");
+  return res.json();
+}
 
 // CART API
 export async function fetchCart() {
