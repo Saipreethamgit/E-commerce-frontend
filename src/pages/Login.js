@@ -12,44 +12,27 @@ const Login = ({ setUser }) => {
     e.preventDefault();
 
     if (!email || !password) {
-      alert('Please enter email and password');
+      toast.error('Please enter email and password');
       return;
     }
 
     try {
-      let data;
+      // Call real API
+      const data = await loginAPI(email, password);
 
-      // Try real API login first
-      if (loginAPI) {
-        data = await loginAPI(email, password);
+      if (!data.token) throw new Error('Login failed: no token returned');
 
-        // Save token & user info in localStorage
-        localStorage.setItem('token', data.token);
-        localStorage.setItem(
-          'user',
-          JSON.stringify({ id: data.userId, username: data.username })
-        );
+      // Save JWT token & user info
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify({ id: data.userId, username: data.username }));
 
-        setUser({ id: data.userId, username: data.username });
-        toast.success('Login successful!');
-      } else {
-        // Dummy login fallback (for development)
-        const dummyUser = { email };
-        localStorage.setItem('user', JSON.stringify(dummyUser));
-        setUser(dummyUser);
-        toast.success('Login successful (dummy)');
-      }
+      setUser({ id: data.userId, username: data.username });
+      toast.success('Login successful!');
 
-      // Navigate to products page
       navigate('/products');
     } catch (error) {
-      // If API fails, fallback to dummy login
-      const dummyUser = { email };
-      localStorage.setItem('user', JSON.stringify(dummyUser));
-      setUser(dummyUser);
-      toast.success('Login successful (dummy fallback)');
-      console.error('Login API failed:', error);
-      navigate('/products');
+      console.error('Login failed:', error);
+      toast.error('Login failed. Please check your credentials.');
     }
   };
 

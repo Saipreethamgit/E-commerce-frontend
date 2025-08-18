@@ -1,5 +1,6 @@
-const API_BASE = "https://e-commerce-backend-6jy0.onrender.com"; 
+const API_BASE = "https://e-commerce-backend-6jy0.onrender.com";
 
+// Get headers including JWT token
 export function getAuthHeaders() {
   const token = localStorage.getItem("token");
   return token ? { Authorization: `Bearer ${token}` } : {};
@@ -51,7 +52,7 @@ export async function removeCartItem(productId) {
   return res.json();
 }
 
-// WISHLIST API
+// WISHLIST API (optional)
 export async function fetchWishlist() {
   const res = await fetch(`${API_BASE}/api/wishlist`, {
     headers: { ...getAuthHeaders() }

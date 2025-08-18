@@ -49,7 +49,8 @@ function App() {
 
 
  const addToCart = async (product) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
+
   if (!token) {
     toast.error("Please login to add items to cart.");
     return;
@@ -58,34 +59,35 @@ function App() {
   try {
     const productId = String(product.id || product._id);
 
-    // Call backend API
+    // Call backend API to add/update cart
     const updatedCartItem = await addOrUpdateCartItem({
       productId,
       quantity: 1
     });
 
-    // Update local cartItems
+    // Check if product already exists in cart
     const existing = cartItems.find(item => String(item.productId) === productId);
     let updatedCart;
+
     if (existing) {
+      // Increment quantity locally
       updatedCart = cartItems.map(item =>
         String(item.productId) === productId
           ? { ...item, quantity: item.quantity + 1 }
           : item
       );
     } else {
+      // Add new item to cart locally
       updatedCart = [...cartItems, { ...updatedCartItem }];
     }
 
     setCartItems(updatedCart);
     toast.success(`${product.name} added to cart!`);
   } catch (error) {
-    console.error(error);
+    console.error("Error adding to cart:", error);
     toast.error("Failed to add item to cart.");
   }
 };
-
-
 
 
 
