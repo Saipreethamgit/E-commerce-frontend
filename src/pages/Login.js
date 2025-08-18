@@ -18,13 +18,16 @@ const Login = ({ setUser }) => {
 
     try {
       // Call real API
-      const data = await loginAPI(username, password);
+      const data = await loginAPI(email, password); // send email now
 
       if (!data.token) throw new Error('Login failed: no token returned');
 
       // Save JWT token & user info
       localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify({ id: data.userId, username: data.username }));
+      localStorage.setItem(
+        'user',
+        JSON.stringify({ id: data.userId, username: data.username })
+      );
 
       setUser({ id: data.userId, username: data.username });
       toast.success('Login successful!');
