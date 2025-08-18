@@ -57,37 +57,34 @@ function App() {
 
   try {
     const productId = String(product.id || product._id);
-    const userId = String(user.id || user._id);
+
+    // Call backend API
+    const updatedCartItem = await addOrUpdateCartItem({
+      productId,
+      quantity: 1
+    });
+
+    // Update local cartItems
     const existing = cartItems.find(item => String(item.productId) === productId);
     let updatedCart;
-
     if (existing) {
       updatedCart = cartItems.map(item =>
         String(item.productId) === productId
           ? { ...item, quantity: item.quantity + 1 }
           : item
       );
-      await addOrUpdateCartItem({
-        userId,
-        productId,
-        quantity: existing.quantity + 1
-      }, token);
     } else {
-      updatedCart = [...cartItems, { ...product, productId, quantity: 1 }];
-      await addOrUpdateCartItem({
-        userId,
-        productId,
-        quantity: 1
-      }, token);
+      updatedCart = [...cartItems, { ...updatedCartItem }];
     }
 
     setCartItems(updatedCart);
     toast.success(`${product.name} added to cart!`);
   } catch (error) {
     console.error(error);
-    toast.error("Failed to update cart.");
+    toast.error("Failed to add item to cart.");
   }
 };
+
 
 
 
