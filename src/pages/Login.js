@@ -18,7 +18,7 @@ const Login = ({ setUser }) => {
 
     try {
       // Call real API
-      const data = await loginAPI(email, password);
+      const data = await loginAPI(username, password);
 
       if (!data.token) throw new Error('Login failed: no token returned');
 
