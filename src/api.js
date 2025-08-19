@@ -10,19 +10,26 @@ export function getAuthHeaders() {
 export async function loginAPI(email, password) {
   const res = await fetch(`${API_BASE}/api/auth/login`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password })
+    headers: { 
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({ email: email.toLowerCase().trim(), password: password.trim() })
   });
 
-  if (!res.ok) throw new Error("Login failed");
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Login failed (${res.status}): ${errorText}`);
+  }
 
   const data = await res.json();
 
-  // Store JWT token in localStorage
+  // Save JWT
   localStorage.setItem("token", data.token);
 
   return data;
 }
+
 
 
 // PRODUCTS API
