@@ -13,9 +13,17 @@ export async function loginAPI(email, password) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })
   });
+
   if (!res.ok) throw new Error("Login failed");
-  return res.json();
+
+  const data = await res.json();
+
+  // Store JWT token in localStorage
+  localStorage.setItem("token", data.token);
+
+  return data;
 }
+
 
 // PRODUCTS API
 export async function fetchProducts() {
@@ -78,4 +86,18 @@ export async function removeWishlistItem(productId) {
   });
   if (!res.ok) throw new Error("Failed to remove wishlist item");
   return res.json();
+}
+// REGISTER API
+export async function registerAPI(email, password) {
+  const res = await fetch(`${API_BASE}/api/auth/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Registration failed");
+  }
+
+  return await res.json();
 }

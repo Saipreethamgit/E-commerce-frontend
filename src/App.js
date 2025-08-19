@@ -12,6 +12,7 @@ import Checkout from './pages/Checkout';
 import Profile from './pages/Profile';
 import OrderHistory from './pages/OrderHistory';
 import axios from 'axios';
+import Register from "./pages/Register";
 
 import { 
   addOrUpdateCartItem, 
@@ -111,6 +112,7 @@ function App() {
             <Route path="/products/:id" element={<ProductDetail addToCart={addToCart} />} />
             <Route path="/cart" element={<Cart cartItems={cartItems} setCartItems={setCartItems} />} />
             <Route path="/login" element={<Login setUser={setUser} />} />
+            <Route path="/register" element={<Register />} />
             <Route path="*" element={<h2 className="text-center mt-10">404 - Page Not Found</h2>} />
             <Route path="/checkout" element={<Checkout cartItems={cartItems} setCartItems={setCartItems} />} />
             <Route path="/profile" element={<Profile user={user} />} />
