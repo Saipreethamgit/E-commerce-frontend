@@ -58,6 +58,7 @@ Other Tools
 Git & GitHub for version control
 
 📂 Project Structure
+
 e-commerce-platform/
 │── backend/              # Spring Boot backend
 │   ├── src/main/java/
@@ -74,7 +75,7 @@ e-commerce-platform/
 
 ⚡ Deployment
 
-Frontend (React) → Vercel - https://e-commerce-frontend-q6t5.vercel.app
+Frontend (React) → Vercel - https://e-commerce-frontend-q6t5.vercel.app (Credentials to login Email: test@example.com, Password: Test@123)
 
 Backend (Spring Boot) → Render - https://e-commerce-backend-6jy0.onrender.com
 
