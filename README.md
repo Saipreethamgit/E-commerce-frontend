@@ -1,70 +1,89 @@
-# Getting Started with Create React App
+🛒 E-Commerce Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack e-commerce web application built with React (frontend), Spring Boot (backend), and MongoDB (database). The platform provides users with a seamless shopping experience, including product browsing, cart management, authentication, order placement, and an admin panel for product management.
 
-## Available Scripts
+🚀 Features
+🔹 User Features
 
-In the project directory, you can run:
+Browse products with filters and search
 
-### `npm start`
+View product details and reviews
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Add/remove items from cart
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Secure user authentication (JWT-based login & signup)
 
-### `npm test`
+Place orders and view order history
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Profile management (user info, addresses, etc.)
 
-### `npm run build`
+Responsive UI with modern design
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+🔹 Admin Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Add, update, or delete products
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Manage inventory and categories
 
-### `npm run eject`
+View customer orders
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Handle user management
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+🛠️ Tech Stack
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Frontend
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+React.js
 
-## Learn More
+Tailwind CSS / Styled Components (your choice)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Axios for API requests
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Vercel deployment
 
-### Code Splitting
+Backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Spring Boot (Java)
 
-### Analyzing the Bundle Size
+Spring Security + JWT for authentication
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+RESTful APIs
 
-### Making a Progressive Web App
+MongoDB (Atlas) as database
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Render deployment
 
-### Advanced Configuration
+Other Tools
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Git & GitHub for version control
 
-### Deployment
+📂 Project Structure
+e-commerce-platform/
+│── backend/              # Spring Boot backend
+│   ├── src/main/java/
+│   │   ├── controller/   # API controllers
+│   │   ├── model/        # Data models
+│   │   ├── repository/   # MongoDB repositories
+│   │   ├── service/      # Business logic
+│   │   └── config/       # Security & JWT config
+│── frontend/             # React frontend
+│   ├── src/components/   # Reusable UI components
+│   ├── src/pages/        # Pages (Home, Cart, Profile, etc.)
+│   ├── src/context/      # State management
+│   └── src/services/     # API integration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+⚡ Deployment
 
-### `npm run build` fails to minify
+Frontend (React) → Vercel - https://e-commerce-frontend-q6t5.vercel.app
 
-# This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Backend (Spring Boot) → Render - https://e-commerce-backend-6jy0.onrender.com
+
+Database → MongoDB Atlas - https://cloud.mongodb.com/v2/688a489da836b449725e1566#/metrics/replicaSet/68938a2e931cea000d2dec14/explorer/Ecommerce
+
+🔑 Authentication
+
+JWT-based authentication for secure login/signup
+
+Token stored in localStorage for session persistence
+
+Role-based access (User / Admin)
