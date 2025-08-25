@@ -42,10 +42,10 @@ export async function fetchProducts() {
 // CART API
 export async function fetchCart() {
   const res = await fetch(`${API_BASE}/api/cart`, {
-    headers: { ...getAuthHeaders() }
+    headers: { "Content-Type": "application/json", ...getAuthHeaders() }
   });
   if (!res.ok) throw new Error("Failed to fetch cart");
-  return res.json();
+  return res.json(); 
 }
 
 export async function addOrUpdateCartItem({ productId, quantity }) {
@@ -55,7 +55,7 @@ export async function addOrUpdateCartItem({ productId, quantity }) {
     body: JSON.stringify({ productId, quantity }),
   });
   if (!res.ok) throw new Error("Failed to add/update cart item");
-  return res.json();
+  return res.json(); 
 }
 
 export async function removeCartItem(productId) {
@@ -64,8 +64,9 @@ export async function removeCartItem(productId) {
     headers: { ...getAuthHeaders() }
   });
   if (!res.ok) throw new Error("Failed to remove cart item");
-  return res.json();
+  return true; 
 }
+
 
 // WISHLIST API (optional)
 export async function fetchWishlist() {
